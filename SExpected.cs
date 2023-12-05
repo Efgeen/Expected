@@ -1,11 +1,11 @@
-﻿namespace Expected {
+﻿namespace _Expected {
 	public struct SExpected {
 		private readonly bool m_oke;
 		private readonly static SExpected s_exp;
 		private readonly static SExpected s_une;
 		public readonly bool Oke => 
 			m_oke;
-		public static SExpected Exp => 
+		public static SExpected Expected => 
 			s_exp;
 		public SExpected() =>
 			this = s_exp;
