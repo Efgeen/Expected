@@ -1,4 +1,4 @@
-﻿namespace _Expected {
+﻿namespace EXPECTED_H {
 	public struct SExpected {
 		private readonly bool m_oke;
 		private readonly static SExpected s_exp;
