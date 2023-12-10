@@ -1,4 +1,4 @@
 ```cs
-global using Expected;
-global using static Expected.SExpected;
+global using EXPECTED_H;
+global using static EXPECTED_H.SExpected;
 ```
