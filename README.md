@@ -14,7 +14,7 @@ private SExpected<float, string> Divide(float numerator, float denominator) {
   return numerator/denominator;
 }
 private void Main(void) {
-  var quotient = Divide(1.0f, 1.0f);
+  SExpected<float, string> quotient = Divide(1.0f, 1.0f);
   if (quotient.HasValue) {
     /* quotient.Value */
   }
