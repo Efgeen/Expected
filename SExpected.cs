@@ -1,121 +1,84 @@
 ﻿namespace EXPECTED_H {
 	public struct SExpected {
-		private readonly bool m_oke;
-		private readonly static SExpected s_exp;
-		private readonly static SExpected s_une;
-		public readonly bool Oke => 
-			m_oke;
-		public static SExpected Expected => 
-			s_exp;
-		public SExpected() =>
-			this = s_exp;
-		private SExpected(bool oke) =>
-			m_oke = oke;
-		static SExpected() =>
-			(s_exp, s_une) = (new(true), new(false));
-		public static implicit operator bool(SExpected exp) => 
-			exp.m_oke;
-		public static implicit operator SExpected(bool oke) => 
-			oke ? s_exp : s_une;
-		public static bool operator !(SExpected exp) => 
-			exp ? s_une : s_exp;
+		private readonly bool m_hasValue;
+		private readonly static SExpected s_expected;
+		private readonly static SExpected s_unexpected;
+		public readonly bool HasValue => m_hasValue;
+		public static SExpected Expected => s_expected;
+		public SExpected() => this = s_expected;
+		private SExpected(bool hasValue) => m_hasValue = hasValue;
+		static SExpected() => (s_expected, s_unexpected) = (new(true), new(false));
+		public static implicit operator bool(SExpected expected) => expected.m_hasValue;
+		public static implicit operator SExpected(bool hasValue) => hasValue ? s_expected : s_unexpected;
+		public static bool operator !(SExpected expected) => expected ? s_unexpected : s_expected;
 	}
-	public struct SExpected<N> {
-		private readonly bool m_oke;
-		private readonly N m_nay;
-		private static readonly SExpected<N> s_exp;
-		private static readonly SExpected<N> s_une;
-		public readonly bool Oke => 
-			m_oke;
-		public readonly N Nay => 
-			m_nay;
-		public SExpected() =>
-			this = s_exp;
-		private SExpected(bool oke, object? obj = null) =>
-			(m_oke, m_nay) = (oke, obj != null ? (N)obj : default!);
-		public SExpected(N nay) =>
-			this = nay != null ? new(false, nay) : s_exp;
-		static SExpected() =>
-			(s_exp, s_une) = (new(true), new(false));
-		public static implicit operator bool(SExpected<N> exp) => 
-			exp.m_oke;
-		public static implicit operator N(SExpected<N> exp) => 
-			exp.m_nay;
-		public static implicit operator SExpected<N>(N nay) => 
-			new(nay);
-		public static implicit operator SExpected(SExpected<N> exp) => 
-			(SExpected)exp;
-		public static implicit operator SExpected<N>(SExpected exp) =>
-			exp ? s_exp : s_une;
+	public struct SExpected<E> {
+		private readonly bool m_hasValue;
+		private readonly E m_error;
+		private static readonly SExpected<E> s_expected;
+		private static readonly SExpected<E> s_unexpected;
+		public readonly bool HasValue => m_hasValue;
+		public readonly E Error => m_error;
+		public SExpected() => this = s_expected;
+		private SExpected(bool hasValue, object? error = null) => (m_hasValue, m_error) = (hasValue, error != null ? (E)error : default!);
+		public SExpected(E error) => this = error != null ? new(false, error) : s_expected;
+		static SExpected() => (s_expected, s_unexpected) = (new(true), new(false));
+		public static implicit operator bool(SExpected<E> expected) => expected.m_hasValue;
+		public static implicit operator E(SExpected<E> expected) => expected.m_error;
+		public static implicit operator SExpected<E>(E error) => new(error);
+		public static implicit operator SExpected(SExpected<E> expected) => (SExpected)expected;
+		public static implicit operator SExpected<E>(SExpected expected) => expected ? s_expected : s_unexpected;
 	}
-	public struct SExpected<Y, N> {
-		private readonly bool m_oke;
-		private readonly Y m_yay;
-		private readonly N m_nay;
-		private readonly int m_len;
-		private static readonly SExpected<Y, N> s_exp;
-		private static readonly SExpected<Y, N> s_une;
-		public readonly bool Oke => 
-			m_oke;
-		public readonly Y Yay => 
-			m_yay;
-		public readonly N Nay => 
-			m_nay;
-		public readonly int Len => 
-			m_len;
-		public readonly object this[int inx] {
-			get =>
-				m_len < 0x00 ? m_yay! : ((Array)(object)m_yay!).GetValue(inx)!;
+	public struct SExpected<T, E> {
+		private readonly bool m_hasValue;
+		private readonly T m_value;
+		private readonly E m_error;
+		private readonly int m_length;
+		private static readonly SExpected<T, E> s_expected;
+		private static readonly SExpected<T, E> s_unexpected;
+		public readonly bool HasValue => m_hasValue;
+		public readonly T Value => m_value;
+		public readonly E Error => m_error;
+		public readonly int Length => m_length;
+		public readonly object this[int index] {
+			get => m_length < 0x00 ? m_value! : ((Array)(object)m_value!).GetValue(index)!;
 			set {
-				if (m_len < 0x00) {
+				if (m_length < 0x00) {
 					return;
 				}
-				((Array)(object)m_yay!).SetValue(value, inx);
+				((Array)(object)m_value!).SetValue(value, index);
 			}
 		}
-		public SExpected() =>
-			this = s_exp;
-		private SExpected(bool oke, object? obj = null) {
-			if (m_oke = oke) {
-				if (obj != null) {
-					m_yay = (Y)obj;
-					m_len = typeof(Y).IsArray ? ((Array)obj).Length : -0x01;
+		public SExpected() => this = s_expected;
+		private SExpected(bool hasValue, object? error = null) {
+			if (m_hasValue == hasValue) {
+				if (error != null) {
+					m_value = (T)error;
+					m_length = typeof(T).IsArray ? ((Array)error).Length : -0x01;
 				}
 				else {
-					m_yay = default!;
-					m_len = -0x01;
+					m_value = default!;
+					m_length = -0x01;
 				}
-				m_nay = default!;
+				m_error = default!;
 			}
 			else {
-				m_yay = default!;
-				m_nay = obj != null ? (N)obj : default!;
-				m_len = -0x01;
+				m_value = default!;
+				m_error = error != null ? (E)error : default!;
+				m_length = -0x01;
 			}
 		}
-		public SExpected(Y yay) =>
-			this = yay != null ? new(true, yay) : s_exp;
-		public SExpected(N nay) => 
-			this = nay != null ? new(false, nay) : s_une;
-		static SExpected() =>
-			(s_exp, s_une) = (new(true), new(false));
-		public static implicit operator bool(SExpected<Y, N> exp) => 
-			exp.m_oke;
-		public static implicit operator Y(SExpected<Y, N> exp) => 
-			exp.m_yay;
-		public static implicit operator N(SExpected<Y, N> exp) => 
-			exp.m_nay;
-		public static implicit operator SExpected<Y, N>(Y yay) => 
-			new(yay);
-		public static implicit operator SExpected<Y, N>(N nay) => 
-			new(nay);
-		public static implicit operator SExpected(SExpected<Y, N> exp) => 
-			(SExpected)exp;
-		public static implicit operator SExpected<Y, N>(SExpected exp) =>
-			exp ? s_exp : s_une;
-		public static implicit operator SExpected<N>(SExpected<Y, N> exp) => 
-			(SExpected<N>)exp;
-		public static implicit operator SExpected<Y, N>(SExpected<N> exp) =>
-			exp ? s_exp : s_une;
+		public SExpected(T value) => this = value != null ? new(true, value) : s_expected;
+		public SExpected(E error) => this = error != null ? new(false, error) : s_unexpected;
+		static SExpected() => (s_expected, s_unexpected) = (new(true), new(false));
+		public static implicit operator bool(SExpected<T, E> expected) => expected.m_hasValue;
+		public static implicit operator T(SExpected<T, E> expected) => expected.m_value;
+		public static implicit operator E(SExpected<T, E> expected) => expected.m_error;
+		public static implicit operator SExpected<T, E>(T value) => new(value);
+		public static implicit operator SExpected<T, E>(E error) => new(error);
+		public static implicit operator SExpected(SExpected<T, E> expected) => (SExpected)expected;
+		public static implicit operator SExpected<T, E>(SExpected expected) => expected ? s_expected : s_unexpected;
+		public static implicit operator SExpected<E>(SExpected<T, E> expected) => (SExpected<E>)expected;
+		public static implicit operator SExpected<T, E>(SExpected<E> expected) => expected ? s_expected : s_unexpected;
 	}
 }
