@@ -8,7 +8,7 @@ global using static EXPECTED_H.SExpected;
 ## Usage
 ```cs
 private SExpected<float, string> Divide(float numerator, float denominator) {
-  if (denominator = 0.0f) {
+  if (denominator == 0.0f) {
     return "division by zero";
   }
   return numerator/denominator;
