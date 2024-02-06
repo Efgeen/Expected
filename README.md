@@ -7,13 +7,13 @@ global using static EXPECTED_H.SExpected;
 ```
 ## Usage
 ```cs
-private SExpected<float, string> Divide(float numerator, float denominator) {
+private static SExpected<float, string> Divide(float numerator, float denominator) {
   if (denominator == 0.0f) {
     return "division by zero";
   }
   return numerator/denominator;
 }
-private void Main(void) {
+private static void Main(void) {
   SExpected<float, string> quotient = Divide(1.0f, 1.0f);
   if (quotient.HasValue) {
     /* quotient.Value */
