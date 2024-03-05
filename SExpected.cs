@@ -53,7 +53,7 @@ public struct SExpected<T, E> {
 	}
 	public SExpected() => this = s_expected;
 	private SExpected(bool hasValue, object? error = null) {
-		if (m_hasValue == hasValue) {
+		if (m_hasValue = hasValue) {
 			if (error != null) {
 				m_value = (T)error;
 				m_length = typeof(T).IsArray ? ((Array)error).Length : -0x01;
