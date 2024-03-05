@@ -1,4 +1,6 @@
-﻿namespace EXPECTED_H;
+global using _EXPECTED_H;
+global using static _EXPECTED_H.SExpected;
+namespace _EXPECTED_H;
 public struct SExpected {
 	private readonly bool m_hasValue;
 	private readonly static SExpected s_expected;
