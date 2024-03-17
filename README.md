@@ -5,7 +5,7 @@ A minimalistic abstraction of Andrei Alexandrescu's "Expect the expected" for C#
 ## Using(s)
 
 ### Single-project scope
-* Add the ``SExpected.cs`` file directly to an existing project. (For project-wide usage.)
+* Add the ``SExpected.cs`` file directly to an existing project, this immediately allows for project-wide usage.
 
 ### Multi-project scope
 1. Add the ``SExpected.cs`` file to any project.
