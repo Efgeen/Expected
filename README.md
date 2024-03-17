@@ -1,10 +1,21 @@
 # Expected
 
-## Usings
+A minimalistic abstraction of Andrei Alexandrescu's "Expect the expected" for C#.
+
+## Using(s)
+
+### Single-project scope
+* Add the ``SExpected.cs`` file directly to an existing project. (For project-wide usage.)
+
+### Multi-project scope
+1. Add the ``SExpected.cs`` file to any project.
+2. Add a reference to the project containing the ``SExpected.cs`` file.
+3. Add usings, e.g.,
 ```cs
 global using EXPECTED_H;
 global using static EXPECTED_H.SExpected;
 ```
+
 ## Usage
 ```cs
 private static SExpected<float, string> Divide(float n, float d) {
