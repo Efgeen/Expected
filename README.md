@@ -24,7 +24,7 @@ private static SExpected<float, string> Divide(float n, float d) {
     }
     return n/d;
 }
-private static void Main(void) {
+private static void Main() {
     SExpected<float, string> q;
     q = Divide(1.0f, 1.0f);
     if (q.HasValue) {
